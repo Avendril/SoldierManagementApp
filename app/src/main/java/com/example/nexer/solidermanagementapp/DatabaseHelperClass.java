@@ -23,13 +23,16 @@ public class DatabaseHelperClass extends SQLiteOpenHelper {
     public DatabaseHelperClass(Context context) {
         super(context, DATABASE_NAME, null, 1);
         SQLiteDatabase db;
-       // db = this.getWritableDatabase();
+       /* db = this.getWritableDatabase(); */
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table " + TABLE_NAME + " (ID INTEGERE PRIMARY KEY AUTOINCREMENT," + FIRST_NAME + " TEXT," + LAST_NAME + " TEXT," + PASSWORD + " TEXT," + RANK + " TEXT," + STATUS + " Text)");
     }
+
+    //Remove,Add,Delete and create table.
+    // and use Select * from table
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
