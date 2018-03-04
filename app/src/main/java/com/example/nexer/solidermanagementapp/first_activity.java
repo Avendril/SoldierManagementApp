@@ -23,12 +23,24 @@ public class first_activity extends AppCompatActivity {
         LoginDatabase.execSQL("INSERT INTO Logins VALUES('admin','admin');");
     }
 
-    private String fetchData(String usernameInput){
+    private boolean fetchData(String usernameInput, String passwordInput){
         Cursor resultSet;
-        resultSet = LoginDatabase.rawQuery(String.format("Select username from Logins where username = %s;", usernameInput),null);
+        boolean testresult = true;
+        resultSet = LoginDatabase.rawQuery("Select username from Logins where username = " + usernameInput + " and password = " + passwordInput + ";",null);
         resultSet.moveToFirst();
         String username = resultSet.getString(0);
         String password = resultSet.getString(1);
+        if(username == null || username != usernameInput)
+        {
+            testresult = false;
+        }else if(password == null || password != passwordInput){
+            testresult = false;
+        }
+        else{
+            return testresult;
+        }
+
+        return testresult;
     }
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,13 +64,15 @@ public class first_activity extends AppCompatActivity {
         LoginInfo = (EditText)findViewById(loginTextBox);
         PasswordInfo = (EditText)findViewById(passwordTextBox);
 
-        if(){
+        String userLogin = String.valueOf(LoginInfo);
+        String userPass = String.valueOf(PasswordInfo);
+
+
+        boolean results = fetchData(userLogin, userPass);
+
+        if(results = true){
             Intent intent = new Intent(this, navigation_activity.class);
             startActivity(intent);
-        }else if (){
-
-        }else if(){
-
         }else{
 
         }
