@@ -14,67 +14,65 @@ import static com.example.nexer.solidermanagementapp.R.id.passwordTextBox;
 
 public class first_activity extends AppCompatActivity {
 
-    SQLiteDatabase LoginDatabase = openOrCreateDatabase("LoginDatabase",MODE_PRIVATE,null);
-
     private Button button;
+    private EditText UsernameET, PasswordET;
 
-    private void createDatabase(){
-        LoginDatabase.execSQL("CREATE TABLE IF NOT EXISTS Logins(Username VARCHAR,Password VARCHAR);");
-        LoginDatabase.execSQL("INSERT INTO Logins VALUES('admin','admin');");
-    }
-
-    private boolean fetchData(String usernameInput, String passwordInput){
-        Cursor resultSet;
-        boolean testresult = true;
-        resultSet = LoginDatabase.rawQuery("Select username from Logins where username = " + usernameInput + " and password = " + passwordInput + ";",null);
-        resultSet.moveToFirst();
-        String username = resultSet.getString(0);
-        String password = resultSet.getString(1);
-        if(username == null || username != usernameInput)
-        {
-            testresult = false;
-        }else if(password == null || password != passwordInput){
-            testresult = false;
-        }
-        else{
-            return testresult;
-        }
-
-        return testresult;
-    }
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_first_activity);
+//        createDatabase();
 
-        DatabaseHelperClass myDB = new DatabaseHelperClass(this);
+        UsernameET = (EditText)findViewById(loginTextBox);
+        PasswordET = (EditText)findViewById(passwordTextBox);
 
-        button = findViewById(R.id.LoginButton);
-        button.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-                openNavigation();
-            }
-        });
+//        button = findViewById(R.id.LoginButton);
+//        button.setOnClickListener(new View.OnClickListener(){
+//            public void onClick(View v){
+//                openNavigation();
+//            }
+//        });
     }
 
-    public void openNavigation(){
-        EditText LoginInfo;
-        EditText PasswordInfo;
+    public void OnLogin(View view){
+        String username = UsernameET.getText().toString();
+        String password = PasswordET.getText().toString();
+        String type= "login";
 
-        LoginInfo = (EditText)findViewById(loginTextBox);
-        PasswordInfo = (EditText)findViewById(passwordTextBox);
-
-        String userLogin = String.valueOf(LoginInfo);
-        String userPass = String.valueOf(PasswordInfo);
-
-
-        boolean results = fetchData(userLogin, userPass);
-
-        if(results = true){
-            Intent intent = new Intent(this, navigation_activity.class);
-            startActivity(intent);
-        }else{
-
-        }
+        BackgroundWork backgroundWorker = new BackgroundWork(this);
+        backgroundWorker.execute(type, username, password);
     }
+
+//    public void openNavigation(){
+//            Intent intent = new Intent(this, navigation_activity.class);
+//            startActivity(intent);
+//    }
+
+        /*SQLiteDatabase LoginDatabase = openOrCreateDatabase("LoginDatabase",MODE_PRIVATE,null);*/
+
+    //    private void createDatabase(){
+//        LoginDatabase.execSQL("CREATE TABLE IF NOT EXISTS Logins(Username VARCHAR,Password VARCHAR);");
+//        LoginDatabase.execSQL("INSERT INTO Logins VALUES('admin','admin');");
+//    }
+
+//    private boolean fetchData(String usernameInput, String passwordInput){
+//        Cursor resultSet;
+//        boolean testresult = true;
+//        resultSet = LoginDatabase.rawQuery("Select username from Logins where username = " + usernameInput + " and password = " + passwordInput + ";",null);
+//        resultSet.moveToFirst();
+//        String username = resultSet.getString(0);
+//        String password = resultSet.getString(1);
+//        if(username == null || username != usernameInput)
+//        {
+//            testresult = false;
+//        }else if(password == null || password != passwordInput){
+//            testresult = false;
+//        }
+//        else{
+//            return testresult;
+//        }
+//
+//        return testresult;
+//    }
+
 }
