@@ -38,23 +38,23 @@ public class BackgroundWork  extends AsyncTask<String, Void, String> {
     @Override
     protected String doInBackground(String... params) {
         String type = params[0];
-        String login_url = "http://10.0.2.2/login.php";
+        String login_url = "http://10.0.2.2/login.php"; //My login php file
 
         if(type.equals("login")) try {
             String username = params[1];
             String password = params[2];
 
             URL url = new URL(login_url);
-            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-            httpURLConnection.setRequestMethod("POST");
+            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection(); //Open a connection
+            httpURLConnection.setRequestMethod("POST"); //Set a type of data/format
             httpURLConnection.setDoOutput(true);
             httpURLConnection.setDoInput(true);
             OutputStream outputStream = httpURLConnection.getOutputStream();
             BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
             String post_data = URLEncoder.encode("username","UTF-8")+"="+URLEncoder.encode(username,"UTF-8")+"&"+ URLEncoder.encode("password","UTF-8")+"="+URLEncoder.encode(password,"UTF-8");
-            bufferedWriter.write(post_data);
+            bufferedWriter.write(post_data);//Above is giving the format of each username and password and how they are meant to be used in which order
             bufferedWriter.flush();
-            bufferedWriter.close();
+            bufferedWriter.close();//Flush and close the buffer, thats just a good practice to close something you opened.
             outputStream.close();
             InputStream inputStream = httpURLConnection.getInputStream();
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1"));
@@ -66,7 +66,7 @@ public class BackgroundWork  extends AsyncTask<String, Void, String> {
 
             bufferedReader.close();
             inputStream.close();
-            httpURLConnection.disconnect();
+            httpURLConnection.disconnect(); //finally, disconnecting the URL
 
             return result;
         } catch (MalformedURLException e) {
