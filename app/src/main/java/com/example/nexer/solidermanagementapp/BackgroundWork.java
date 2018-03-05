@@ -22,7 +22,10 @@ import java.net.URLEncoder;
  * Created by Bartek Chmielewski on 22/02/2018.
  *
  * References:
- *
+ *https://www.youtube.com/channel/UCs6nmQViDpUw0nuIx9c_WvA <- Great channel to learn programming!!!
+ * Stackoverflow <- Various sources, too many to list
+ * Jayme Doran, we were working together, helping each other
+ * Jakub Kulik, same as with Jayme
  */
 
 public class BackgroundWork  extends AsyncTask<String, Void, String> {
@@ -59,7 +62,7 @@ public class BackgroundWork  extends AsyncTask<String, Void, String> {
             String result="";
             String line="";
 
-            while((line = bufferedReader.readline()) != null) result += line;
+            while((line = bufferedReader.readLine()) != null) result += line;
 
             bufferedReader.close();
             inputStream.close();
